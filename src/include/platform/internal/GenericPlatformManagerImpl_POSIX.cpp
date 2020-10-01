@@ -155,8 +155,11 @@ void GenericPlatformManagerImpl_POSIX<ImplClass>::SysProcess()
     nextTimeoutMs = mNextTimeout.tv_sec * 1000 + mNextTimeout.tv_usec / 1000;
     _StartChipTimer(nextTimeoutMs);
 
+    // ST override; select must not block.
+    struct timeval immediate = { .tv_sec = 0, .tv_usec = 0 };
+
     Impl()->UnlockChipStack();
-    selectRes = select(mMaxFd + 1, &mReadSet, &mWriteSet, &mErrorSet, &mNextTimeout);
+    selectRes = select(mMaxFd + 1, &mReadSet, &mWriteSet, &mErrorSet, &immediate);
     Impl()->LockChipStack();
 
     if (selectRes < 0)
@@ -192,7 +195,7 @@ void GenericPlatformManagerImpl_POSIX<ImplClass>::_RunEventLoop()
     {
         SysUpdate();
         SysProcess();
-    } while (mShouldRunEventLoop.load(std::memory_order_relaxed));
+    } while (0); // mShouldRunEventLoop.load(std::memory_order_relaxed));
 
     Impl()->UnlockChipStack();
 }
