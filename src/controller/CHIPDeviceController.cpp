@@ -90,8 +90,8 @@ CHIP_ERROR ChipDeviceController::Init(NodeId localNodeId)
     VerifyOrExit(mState == kState_NotInitialized, err = CHIP_ERROR_INCORRECT_STATE);
 
 #if CONFIG_DEVICE_LAYER
-    err = DeviceLayer::PlatformMgr().InitChipStack();
-    SuccessOrExit(err);
+    //err = DeviceLayer::PlatformMgr().InitChipStack();
+    //SuccessOrExit(err);
 
     err = Init(localNodeId, &DeviceLayer::SystemLayer, &DeviceLayer::InetLayer);
 #endif // CONFIG_DEVICE_LAYER
