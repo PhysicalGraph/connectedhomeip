@@ -57,7 +57,7 @@ wifi-echo app:
 To start the Client in echo mode, run the built executable and pass it the IP
 address and port of the server to talk to, as well as the command "echo".
 
-          $ chip-tool 192.168.0.30 8000 echo
+          $ chip-tool 192.168.0.30 11097 echo
 
 If valid values are supplied, it will begin to periodically send messages to the
 server address provided.
@@ -75,6 +75,6 @@ send, as well as an enpoint id. Right now the "off", "on", and "toggle" commands
 are supported, from the On/Off cluster. The endpoint id must be between 1
 and 240.
 
-          $ chip-tool 192.168.0.30 8000 on 1
+          $ chip-tool 192.168.0.30 11097 on 1
 
 The client will send a single command packet and then exit.

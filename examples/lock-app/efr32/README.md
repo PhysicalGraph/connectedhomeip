@@ -198,7 +198,7 @@ combination with JLinkRTTClient as follows:
     `router table` using a serial terminal (screen / minicom etc.) on the board
     running the lock-app example)
 -   Using chip-tool you can now control the lock status with on/off command such
-    as `chip-tool on <ipv6 address of the node> 11095 1`
+    as `chip-tool on <ipv6 address of the node> 11097 1`
 
 ### Notes
 
