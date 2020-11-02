@@ -138,8 +138,8 @@ CHIP_ERROR ChipDeviceController::Shutdown()
     mState = kState_NotInitialized;
 
 #if CONFIG_DEVICE_LAYER
-    err = DeviceLayer::PlatformMgr().Shutdown();
-    SuccessOrExit(err);
+    //err = DeviceLayer::PlatformMgr().Shutdown();
+    //SuccessOrExit(err);
 #else
     mSystemLayer->Shutdown();
     mInetLayer->Shutdown();
