@@ -42,7 +42,7 @@ int TestCHIPoBLEStackManager()
 
     chip::DeviceLayer::ConnectivityMgr().SetBLEDeviceName("CHIP0001");
 
-    chip::DeviceLayer::Internal::BLEMgrImpl().ConfigureBle(1, false);
+    //chip::DeviceLayer::Internal::BLEMgrImpl().ConfigureBle(1, false);
 
     chip::DeviceLayer::ConnectivityMgr().SetBLEAdvertisingEnabled(
         chip::DeviceLayer::ConnectivityManager::kCHIPoBLEServiceMode_Enabled);
