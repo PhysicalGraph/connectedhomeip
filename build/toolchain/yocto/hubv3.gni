@@ -1,0 +1,4 @@
+arm_cpu = "cortex-a7"
+arm_fpu = "neon"
+arm_float_abi = "hard"
+arm_use_thumb = true
