@@ -100,6 +100,12 @@ endif()
 
 set(GN_ROOT_TARGET ${CHIP_ROOT}/config/esp32)
 
+set(chip_libraries "${CMAKE_CURRENT_BINARY_DIR}/lib/libCHIP.a")
+
+if(CONFIG_ENABLE_PW_RPC)
+    list(APPEND chip_libraries "${CMAKE_CURRENT_BINARY_DIR}/lib/libPwRpc.a")
+endif()
+
 externalproject_add(
     chip_gn
     SOURCE_DIR              ${CHIP_ROOT}
@@ -107,7 +113,7 @@ externalproject_add(
     CONFIGURE_COMMAND       ${GN_EXECUTABLE} --root=${GN_ROOT_TARGET} gen --check --fail-on-unused-args ${CMAKE_CURRENT_BINARY_DIR}
     BUILD_COMMAND           ninja "esp32"
     INSTALL_COMMAND         ""
-    BUILD_BYPRODUCTS        ${CHIP_LIBRARIES}
+    BUILD_BYPRODUCTS        ${chip_libraries}
     WORKING_DIRECTORY       ${CMAKE_CURRENT_LIST_DIR}
     DEPENDS                 args_gn
     BUILD_ALWAYS            1
@@ -135,18 +141,16 @@ target_include_directories(${COMPONENT_LIB} INTERFACE
 
 idf_component_get_property(esp32_mbedtls_lib esp32_mbedtls COMPONENT_LIB)
 
-set(chip_libraries "-lCHIP")
-
-if(CONFIG_ENABLE_PW_RPC)
-    list(APPEND chip_libraries "-lPwRpc")
-endif()
-
 if(CONFIG_BT_ENABLED)
     idf_component_get_property(bt_lib bt COMPONENT_LIB)
     list(APPEND chip_libraries $<TARGET_FILE:${bt_lib}> -lbtdm_app)
 endif()
 
-target_link_libraries(${COMPONENT_LIB} INTERFACE "-L${CMAKE_CURRENT_BINARY_DIR}/lib")
+if(NOT CONFIG_USE_MINIMAL_MDNS)
+    idf_component_get_property(mdns_lib mdns COMPONENT_LIB)
+    list(APPEND chip_libraries $<TARGET_FILE:${mdns_lib}>)
+endif()
+
 target_link_libraries(${COMPONENT_LIB} INTERFACE -Wl,--start-group 
                                                 ${chip_libraries}
                                                 $<TARGET_FILE:mbedcrypto> $<TARGET_FILE:${esp32_mbedtls_lib}> 

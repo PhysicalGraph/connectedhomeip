@@ -1,4 +1,4 @@
-# Temperature Sensor Example
+# CHIP ESP32 Lock Example
 
 ## Building the Example Application
 
@@ -80,7 +80,7 @@ If packages are already installed then simply activate it.
     before flashing. For ESP32-DevKitC devices this is labeled in the
     [functional description diagram](https://docs.espressif.com/projects/esp-idf/en/latest/esp32/hw-reference/esp32/get-started-devkitc.html#functional-description).
 
-          $ idf.py flash monitor ESPPORT=/dev/ttyUSB0
+         $ idf.py flash monitor ESPPORT=/dev/ttyUSB0
 
     Note: Some users might have to install the
     [VCP driver](https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers)
@@ -127,13 +127,4 @@ your network configuration. To erase it, simply run.
 
     $ idf.py erase_flash ESPPORT=/dev/ttyUSB0
 
-The demo application supports temperaturemeasurement and basic cluster.
-
-## Optimization
-
-Optimization related to WiFi, BLuetooth, Asserts etc are the part of this
-example by default. To enable this option set is_debug=false from command-line.
-
-```
-idf make build flash monitor 'is_debug=false'
-```
+The demo application supports on-off cluster.
