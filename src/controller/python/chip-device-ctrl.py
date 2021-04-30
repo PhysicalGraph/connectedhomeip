@@ -37,6 +37,7 @@ import base64
 import textwrap
 import string
 import re
+import requests
 from cmd import Cmd
 from chip.ChipBleUtility import FAKE_CONN_OBJ_VALUE
 
@@ -179,6 +180,7 @@ class DeviceMgrCmd(Cmd):
 
         "set-pairing-wifi-credential",
         "set-pairing-thread-credential",
+        "hub-connect",
     ]
 
     def parseline(self, line):
@@ -556,6 +558,17 @@ class DeviceMgrCmd(Cmd):
     def do_EOF(self, line):
         print()
         return True
+
+    def do_hubconnect(self, line):
+        access_token=''
+        location=''
+        hub=''
+        my_headers = {'Authorization': 'Bearer ' + access_token}
+        url = 'https://api.smartthings.com/elder/' + location +'/api/hubs/' + hub + '/discovery/code'
+        data = {'type':'CHIP','code':'nodeid=0x1234567890ABCDEF,fabricid=0xFAB000000000001D'}
+        response = requests.post(url, json=data, headers=my_headers)
+        print(response)
+        return
 
     def emptyline(self):
         pass
